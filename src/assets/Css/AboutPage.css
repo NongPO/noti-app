@@ -1,0 +1,27 @@
+/* AboutPage.css */
+
+button {
+  transition: transform 0.50s ease, box-shadow 0.50s ease;
+}
+
+button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Specific button styles */
+.button-reject {
+  background-color: #f03a3a; /* Red */
+}
+
+.button-reject:hover {
+  background-color: #f11919; /* Darker Red */
+}
+
+.button-answer {
+  background-color: #09f343; /* Green */
+}
+
+.button-answer:hover {
+  background-color: #09ff2a; /* Darker Green */
+}

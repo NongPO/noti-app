@@ -1,0 +1,139 @@
+/* src/index.css */
+@import "~@fortawesome/fontawesome-free/css/all.min.css";
+
+/* เพิ่ม Tailwind CSS directives */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* การตั้งค่าแอนิเมชัน */
+@keyframes pulse-slow {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 10s infinite;
+}
+
+/* การตั้งค่าสำหรับ SoftPhone */
+.call-card {
+  /* การตั้งค่าเบื้องต้น */
+}
+
+.profile-image {
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  margin-bottom: 15px;
+}
+
+h2 {
+  font-size: 24px;
+  margin-bottom: 5px;
+}
+
+p {
+  font-size: 18px;
+  color: gray;
+  margin-bottom: 20px;
+}
+
+.button-group,
+.action-group {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 15px;
+}
+
+.btn {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.ignore {
+  background-color: lightgray;
+}
+
+.more {
+  background-color: lightgray;
+}
+
+.reject {
+  background-color: red;
+  color: white;
+}
+
+.answer {
+  background-color: green;
+  color: white;
+}
+
+.btn:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transform: translateY(-2px);
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.profile-image {
+  transition: transform 0.3s ease-in-out;
+}
+
+.profile-image:hover {
+  transform: scale(1.1);
+}
+
+.call-card {
+  background: linear-gradient(135deg, #f0f0f0, #e0e0e0);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.call-card::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.1), transparent);
+  transform: translate(-50%, -50%);
+  animation: pulse-background 15s infinite;
+}
+
+@keyframes pulse-background {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.1);
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+h2 {
+  transition: transform 0.3s ease-in-out;
+}
+
+h2:hover {
+  transform: translateY(-5px);
+}
