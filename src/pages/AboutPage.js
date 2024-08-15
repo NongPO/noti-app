@@ -4,11 +4,7 @@ import '../assets/Css/AboutPage.css';
 const AboutPage = () => {
   return (
     <div className="relative flex items-center justify-center h-screen bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 overflow-hidden">
-      <div
-        className="absolute inset-0 bg-cover bg-center animate-pulse-slow opacity-20"
-        style={{ backgroundImage: 'url(https://via.placeholder.com/1920x1080)' }}
-        aria-hidden="true"
-      />
+      
       <div className="relative z-10 bg-white p-6 rounded-lg shadow-lg text-center max-w-sm w-full">
         <img
           src="https://scontent.fbkk12-2.fna.fbcdn.net/v/t1.6435-9/74268828_2186597561640157_2831256456001486848_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=7b2446&_nc_eui2=AeEVhxxHEJ5CBu6xWmqBfKh545j-HUQhzUPjmP4dRCHNQ-SNMCsqbUSE3glWtCG-dNUfDX7mukqYOtm_wPAliXar&_nc_ohc=JDMlubRFAy0Q7kNvgGf4MgA&_nc_ht=scontent.fbkk12-2.fna&oh=00_AYAbxuGowO_y4wO0z2ks-wTvu4PKuzJHOJ1f9cZzghXB6A&oe=66E28FD4"
