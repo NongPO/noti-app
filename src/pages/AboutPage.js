@@ -1,42 +1,74 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
+import '../assets/Css/AboutPage.css';
 
 const AboutPage = () => {
-  // สถานะสำหรับเก็บข้อมูลชื่อและ Ext
-  const [name, setName] = useState('Engi_Nong');
-  const [ext, setExt] = useState('5008');
+  const [name, setName] = useState('');
+  const [ext, setExt] = useState('');
+  const [isWaiting, setIsWaiting] = useState(true);
+  const [callId, setCallId] = useState(null);
+  const [error, setError] = useState(null);
 
-  // ฟังก์ชันจัดการเมื่อคลิกปุ่ม Answer
-  const handleAnswerClick = async () => {
-    const accessToken = 'UZjXpJRNCdMwNOOfRJMK1Q3OZO1kQKzP'; // เปลี่ยนเป็น access_token ที่แท้จริงของคุณ
-    const channelId = 'PJSIP/trunk-test-peer-trunking-endpoint-0000008f'; // ใช้ channel_id ที่ได้รับ
-    const apiUrl = `/openapi/v1.0/call/accept_inbound?access_token=${accessToken}&channel_id=${channelId}`;
+  const accessToken = '8wN9lHFOC0evmxTVXzCTINQ20qVPBgnL'; // Replace with your actual access token
+  const acceptCallUrl = `/openapi/v1.0/call/accept_inbound?access_token=${accessToken}`;
+  const rejectCallUrl = `/openapi/v1.0/call/reject_inbound?access_token=${accessToken}`;
+
+  // Placeholder function to simulate incoming call detection
+  const checkForIncomingCall = useCallback(async () => {
+    // Since no API available for incoming call check, this is a placeholder
+    // You might replace this with event-based notifications or other mechanisms
+    console.log('Checking for incoming calls (simulated)');
+  }, []);
+
+  // Function to handle API calls for accepting or rejecting calls
+  const handleApiCall = async (action) => {
+    const url = action === 'accept' ? acceptCallUrl : rejectCallUrl;
 
     try {
-      const response = await fetch(apiUrl, {
-        method: 'POST', // ใช้วิธีการ POST หรือ GET ตาม API ของคุณ
+      const response = await fetch(url, {
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
+        body: JSON.stringify({ callId }), // Send callId as part of the body
       });
 
       if (response.ok) {
         const data = await response.json();
-        console.log('การตอบสนองจาก API:', data);
+        console.log(`Call ${action}d successfully:`, data);
 
-        // ตรวจสอบว่า API ตอบสนองด้วยข้อมูลที่จำเป็นหรือไม่
-        if (data.name && data.ext) {
-          setName(data.name);  // อัปเดตชื่อ
-          setExt(data.ext);    // อัปเดต Extension
-
-          // เปิดหน้าเว็บ PBX เพื่อรับสาย
-          window.open('https://nong20123.ras.yeastar.com', '_blank');
+        if (action === 'accept') {
+          // Handle successful call acceptance
+          // Add integration logic with Linkus or other client if necessary
         }
+        setIsWaiting(true);
+        setCallId(null);
+        setName('');
+        setExt('');
       } else {
-        console.error('การเรียก API ล้มเหลว:', response.status, response.statusText);
+        console.error(`API call failed (${action}):`, response.status, response.statusText);
+        setError(`Failed to ${action} the call: ${response.statusText}`);
       }
     } catch (error) {
-      console.error('ข้อผิดพลาดที่เกิดขึ้นระหว่างการเรียก API:', error);
+      setError(`Error during API call (${action}): ${error.message}`);
+      console.error(`Error during API call (${action}):`, error);
     }
+  };
+
+  // Simulate polling mechanism (for demonstration purposes)
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      checkForIncomingCall();
+    }, 5000); // Poll every 5 seconds
+
+    return () => clearInterval(intervalId); // Cleanup interval on component unmount
+  }, [checkForIncomingCall]);
+
+  const handleAnswerClick = () => {
+    handleApiCall('accept');
+  };
+
+  const handleRejectClick = () => {
+    handleApiCall('reject');
   };
 
   return (
@@ -44,29 +76,38 @@ const AboutPage = () => {
       <div className="relative z-10 bg-white p-6 rounded-lg shadow-lg text-center max-w-sm w-full">
         <img
           src="https://scontent.fbkk12-2.fna.fbcdn.net/v/t1.6435-9/74268828_2186597561640157_2831256456001486848_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=7b2446&_nc_eui2=AeEVhxxHEJ5CBu6xWmqBfKh545j-HUQhzUPjmP4dRCHNQ-SNMCsqbUSE3glWtCG-dNUfDX7mukqYOtm_wPAliXar&_nc_ohc=JDMlubRFAy0Q7kNvgGf4MgA&_nc_ht=scontent.fbkk12-2.fna&oh=00_AYAbxuGowO_y4wO0z2ks-wTvu4PKuzJHOJ1f9cZzghXB6A&oe=66E28FD4"
-          alt="Profile of Engi_Nong"
+          alt="Profile"
           className="w-32 h-32 rounded-full mx-auto mb-4"
         />
-        <h2 className="text-2xl font-semibold mb-2">{name}</h2>
-        <p className="text-gray-600 mb-4">Ext. {ext}</p>
-        <div className="flex justify-between mb-4">
-          {/* เพิ่มเนื้อหาเพิ่มเติมที่นี่หากจำเป็น */}
-        </div>
-        <div className="flex justify-between">
-          <button 
-            className="px-10 py-3 rounded-full button-answer" 
-            aria-label="Answer"
-            onClick={handleAnswerClick}
-          >
-            Answer
-          </button>
-          <button 
-            className="px-11 py-2 rounded-full button-reject" 
-            aria-label="Reject"
-          >
-            Reject
-          </button>
-        </div>
+        <h2 className="text-2xl font-semibold mb-2">{name || 'No Call'}</h2>
+        <p className="text-gray-600 mb-4">{ext ? `Ext. ${ext}` : 'No active extension'}</p>
+
+        {isWaiting && !error && (
+          <p className="text-gray-600 mb-4">Waiting for an incoming call...</p>
+        )}
+
+        {!isWaiting && callId && (
+          <div className="flex justify-between mb-4">
+            <button
+              className="px-10 py-3 rounded-full button-answer"
+              aria-label="Answer"
+              onClick={handleAnswerClick}
+            >
+              Answer
+            </button>
+            <button
+              className="px-11 py-2 rounded-full button-reject"
+              aria-label="Reject"
+              onClick={handleRejectClick}
+            >
+              Reject
+            </button>
+          </div>
+        )}
+
+        {error && (
+          <p className="text-red-600 mb-4">{error}</p>
+        )}
       </div>
     </div>
   );
