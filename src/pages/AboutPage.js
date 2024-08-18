@@ -1,74 +1,73 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useEffect, /*useState,   useCallback */ } from 'react';
 import '../assets/Css/AboutPage.css';
 
+import { useSelector, useDispatch } from "react-redux";
+import {
+  handleApiCall,
+  getCaller,
+  getIncoming,
+  getEvents,
+  updateCaller,
+  updateIncoming,
+  getHandle
+} from "../store/callApi";
+
+
 const AboutPage = () => {
-  const [name, setName] = useState('');
-  const [ext, setExt] = useState('');
-  const [isWaiting, setIsWaiting] = useState(true);
-  const [callId, setCallId] = useState(null);
-  const [error, setError] = useState(null);
+  const dispatch = useDispatch();
+  const caller = useSelector((state) => getCaller(state));
+  const incomingCall = useSelector((state) => getIncoming(state));
+  const events = useSelector((state) => getEvents(state));
+  const callHandle = useSelector((state) => getHandle(state));
 
-  const accessToken = '8wN9lHFOC0evmxTVXzCTINQ20qVPBgnL'; // Replace with your actual access token
-  const acceptCallUrl = `/openapi/v1.0/call/accept_inbound?access_token=${accessToken}`;
-  const rejectCallUrl = `/openapi/v1.0/call/reject_inbound?access_token=${accessToken}`;
-
-  // Placeholder function to simulate incoming call detection
-  const checkForIncomingCall = useCallback(async () => {
-    // Since no API available for incoming call check, this is a placeholder
-    // You might replace this with event-based notifications or other mechanisms
-    console.log('Checking for incoming calls (simulated)');
-  }, []);
-
-  // Function to handle API calls for accepting or rejecting calls
-  const handleApiCall = async (action) => {
-    const url = action === 'accept' ? acceptCallUrl : rejectCallUrl;
-
-    try {
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ callId }), // Send callId as part of the body
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        console.log(`Call ${action}d successfully:`, data);
-
-        if (action === 'accept') {
-          // Handle successful call acceptance
-          // Add integration logic with Linkus or other client if necessary
-        }
-        setIsWaiting(true);
-        setCallId(null);
-        setName('');
-        setExt('');
-      } else {
-        console.error(`API call failed (${action}):`, response.status, response.statusText);
-        setError(`Failed to ${action} the call: ${response.statusText}`);
-      }
-    } catch (error) {
-      setError(`Error during API call (${action}): ${error.message}`);
-      console.error(`Error during API call (${action}):`, error);
-    }
-  };
-
-  // Simulate polling mechanism (for demonstration purposes)
   useEffect(() => {
-    const intervalId = setInterval(() => {
-      checkForIncomingCall();
-    }, 5000); // Poll every 5 seconds
 
-    return () => clearInterval(intervalId); // Cleanup interval on component unmount
-  }, [checkForIncomingCall]);
+    console.log(events);
+    if (events.events && events.events.msg.hasOwnProperty("members") && events.events.msg.members[0]) {
+      let caller={
+          name : events.events.sn,
+          ext : events.events.msg.members[0].extension.number,
+          isWaiting: false,
+          callId : events.events.msg.call_id,
+          error : null
+      };
+      dispatch(updateIncoming(
+        {
+          call_id:events.events.msg.call_id,
+          channel_id:events.events.msg.members[0].extension.channel_id
+        }
+      ))
+      
+      dispatch(updateCaller( caller));
+    }
 
-  const handleAnswerClick = () => {
-    handleApiCall('accept');
+    if (events.events && events.events.msg.hasOwnProperty("call_from") && events.events.msg.call_from) {
+      let call_from=events.events.msg.call_from;
+      let call_to=events.events.msg.call_to;
+      let call_duration=events.events.msg.call_duration;
+      let caller={
+        name : events.events.sn,
+        ext : `call from ${call_from} to ${call_to} duration ${call_duration} `,
+        isWaiting: true,
+        callId : events.events.msg.call_id,
+        error : null
+    };
+    
+    dispatch(updateCaller( caller));
+    }
+    return () => {
+
+    }
+  },[events,dispatch]);
+
+  const handleAnswerClick = async () => {
+    console.log(incomingCall);
+     dispatch( handleApiCall(callHandle.accept_url, incomingCall.channel_id));
   };
 
-  const handleRejectClick = () => {
-    handleApiCall('reject');
+  const handleRejectClick = async () => {
+    console.log(incomingCall);
+     dispatch(handleApiCall(callHandle.reject_url, incomingCall.channel_id));
   };
 
   return (
@@ -79,14 +78,14 @@ const AboutPage = () => {
           alt="Profile"
           className="w-32 h-32 rounded-full mx-auto mb-4"
         />
-        <h2 className="text-2xl font-semibold mb-2">{name || 'No Call'}</h2>
-        <p className="text-gray-600 mb-4">{ext ? `Ext. ${ext}` : 'No active extension'}</p>
+        <h2 className="text-2xl font-semibold mb-2">{caller.name || 'No Call'}</h2>
+        <p className="text-gray-600 mb-4">{caller.ext ? `Ext. ${caller.ext}` : 'No active extension'}</p>
 
-        {isWaiting && !error && (
+        {caller.isWaiting && !caller.error && (
           <p className="text-gray-600 mb-4">Waiting for an incoming call...</p>
         )}
 
-        {!isWaiting && callId && (
+        {!caller.isWaiting && caller.callId && (
           <div className="flex justify-between mb-4">
             <button
               className="px-10 py-3 rounded-full button-answer"
@@ -105,8 +104,8 @@ const AboutPage = () => {
           </div>
         )}
 
-        {error && (
-          <p className="text-red-600 mb-4">{error}</p>
+        {caller.error && (
+          <p className="text-red-600 mb-4">{caller.error}</p>
         )}
       </div>
     </div>

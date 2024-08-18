@@ -1,0 +1,30 @@
+react-dom.development.js:29895 Download the React DevTools for a better development experience: https://reactjs.org/link/react-devtools
+App.js:24 refreshToken for Auth.
+App.js:24 refreshToken for Auth.
+localhost/:1  Tracking Prevention blocked access to storage for https://scontent.fbkk12-2.fna.fbcdn.net/v/t1.6435-9/74268828_2186597561640157_2831256456001486848_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=7b2446&_nc_eui2=AeEVhxxHEJ5CBu6xWmqBfKh545j-HUQhzUPjmP4dRCHNQ-SNMCsqbUSE3glWtCG-dNUfDX7mukqYOtm_wPAliXar&_nc_ohc=JDMlubRFAy0Q7kNvgGf4MgA&_nc_ht=scontent.fbkk12-2.fna&oh=00_AYAbxuGowO_y4wO0z2ks-wTvu4PKuzJHOJ1f9cZzghXB6A&oe=66E28FD4.
+localhost/:1  Tracking Prevention blocked access to storage for https://scontent.fbkk12-2.fna.fbcdn.net/v/t1.6435-9/74268828_2186597561640157_2831256456001486848_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=7b2446&_nc_eui2=AeEVhxxHEJ5CBu6xWmqBfKh545j-HUQhzUPjmP4dRCHNQ-SNMCsqbUSE3glWtCG-dNUfDX7mukqYOtm_wPAliXar&_nc_ohc=JDMlubRFAy0Q7kNvgGf4MgA&_nc_ht=scontent.fbkk12-2.fna&oh=00_AYAbxuGowO_y4wO0z2ks-wTvu4PKuzJHOJ1f9cZzghXB6A&oe=66E28FD4.
+callApi.js:158 Object
+AboutPage.js:31 Connected to  wss://nong20123.ras.yeastar.com/openapi/v1.0/subscribe?access_token=X52NJamQdhJpqMcBmxc0O0vjLPBfgcCY
+callApi.js:158 Objectaccess_token: "3gFrdm5AMLU9NJOcD4Ay8HQdiwUksdOl"access_token_expire_time: 1800errcode: 0errmsg: "SUCCESS"refresh_token: "SnDTgH1PtioqvQGljIqcocSznz3PiE55"refresh_token_expire_time: 86400[[Prototype]]: Object
+AboutPage.js:34 Connected to WebSocket
+AboutPage.js:42 Objecterrcode: 0errmsg: "SUCCESS"[[Prototype]]: Objectconstructor: ƒ Object()hasOwnProperty: ƒ hasOwnProperty()isPrototypeOf: ƒ isPrototypeOf()propertyIsEnumerable: ƒ propertyIsEnumerable()toLocaleString: ƒ toLocaleString()toString: ƒ toString()valueOf: ƒ valueOf()__defineGetter__: ƒ __defineGetter__()__defineSetter__: ƒ __defineSetter__()__lookupGetter__: ƒ __lookupGetter__()__lookupSetter__: ƒ __lookupSetter__()__proto__: (...)get __proto__: ƒ __proto__()set __proto__: ƒ __proto__()
+[NEW] Explain Console errors by using Copilot in Edge: click
+         
+         to explain an error. 
+        Learn more
+        
+          
+          
+          Don't show again
+        
+AboutPage.js:42 {type: 30011, sn: '3651E3333661', msg: '{"call_id":"1723970875.72","members":[{"extension"…00024","member_status":"ALERT","call_path":""}}]}'}
+AboutPage.js:45 {call_id: '1723970875.72', members: Array(1)}call_id: "1723970875.72"members: Array(1)0: {extension: {…}}length: 1[[Prototype]]: Array(0)[[Prototype]]: Object
+AboutPage.js:42 {type: 30011, sn: '3651E3333661', msg: '{"call_id":"1723970875.72","members":[{"extension"…000025","member_status":"RING","call_path":""}}]}'}msg: "{\"call_id\":\"1723970875.72\",\"members\":[{\"extension\":{\"number\":\"1000\",\"channel_id\":\"PJSIP/1000-00000024\",\"member_status\":\"ALERT\",\"call_path\":\"\"}},{\"extension\":{\"number\":\"1000\",\"channel_id\":\"PJSIP/1000-00000025\",\"member_status\":\"RING\",\"call_path\":\"\"}}]}"sn: "3651E3333661"type: 30011[[Prototype]]: Object
+AboutPage.js:45 {call_id: '1723970875.72', members: Array(2)}call_id: "1723970875.72"members: Array(2)0: extension: call_path: ""channel_id: "PJSIP/1000-00000024"member_status: "ALERT"number: "1000"[[Prototype]]: Object[[Prototype]]: Object1: extension: call_path: ""channel_id: "PJSIP/1000-00000025"member_status: "RING"number: "1000"[[Prototype]]: Object[[Prototype]]: Objectlength: 2[[Prototype]]: Array(0)[[Prototype]]: Object
+AboutPage.js:42 {type: 30011, sn: '3651E3333661', msg: '{"call_id":"1723970875.72","members":[{"extension"…000025","member_status":"RING","call_path":""}}]}'}
+AboutPage.js:45 {call_id: '1723970875.72', members: Array(2)}call_id: "1723970875.72"members: Array(2)0: extension: {number: '1000', channel_id: 'PJSIP/1000-00000024', member_status: 'BYE', call_path: ''}[[Prototype]]: Object1: extension: {number: '1000', channel_id: 'PJSIP/1000-00000025', member_status: 'RING', call_path: ''}[[Prototype]]: Objectlength: 2[[Prototype]]: Array(0)[[Prototype]]: Object
+AboutPage.js:42 {type: 30011, sn: '3651E3333661', msg: '{"call_id":"1723970875.72","members":[{"extension"…0000025","member_status":"BYE","call_path":""}}]}'}
+AboutPage.js:45 {call_id: '1723970875.72', members: Array(1)}
+AboutPage.js:42 {type: 30012, sn: '3651E3333661', msg: '{"call_id":"1723970875.72","time_start":"2024-08-1…ecording":"","did_number":"","agent_ring_time":0}'}msg: "{\"call_id\":\"1723970875.72\",\"time_start\":\"2024-08-18 15:47:55\",\"call_from\":\"1000\",\"call_to\":\"1000\",\"call_duration\":13,\"talk_duration\":0,\"src_trunk_name\":\"\",\"dst_trunk_name\":\"\",\"pin_code\":\"\",\"status\":\"NO ANSWER\",\"type\":\"Internal\",\"recording\":\"\",\"did_number\":\"\",\"agent_ring_time\":0}"sn: "3651E3333661"type: 30012[[Prototype]]: Object
+AboutPage.js:45 {call_id: '1723970875.72', time_start: '2024-08-18 15:47:55', call_from: '1000', call_to: '1000', call_duration: 13, …}agent_ring_time: 0call_duration: 13call_from: "1000"call_id: "1723970875.72"call_to: "1000"did_number: ""dst_trunk_name: ""pin_code: ""recording: ""src_trunk_name: ""status: "NO ANSWER"talk_duration: 0time_start: "2024-08-18 15:47:55"type: "Internal"[[Prototype]]: Object
+AboutPage.js:52 WebSocket connection closed
