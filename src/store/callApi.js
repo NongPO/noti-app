@@ -44,6 +44,9 @@ import {
       refresh_token_expire_time: 0,
       refresh_token: "",
     },
+    error :{
+
+    },
     websocket:{
       url:"",
       wss: null
@@ -161,14 +164,19 @@ const apiCallSlice = createSlice({
       builder.addCase(getToken.fulfilled, (state, action) => {
         // Add user to the state array
         console.log(action.payload);
-        state.auth = action.payload;
-        state.websocket.url = `wss://${base_url}/${api_url}/subscribe?`;
-        let date = new Date();
-        state.token.startTime =  date.toISOString(true);
-
-        state.handle.accept_url = `${url}/call/accept_inbound?access_token=${state.auth.access_token}`;
-        state.handle.reject_url = `${url}/call/reject_inbound?access_token=${state.auth.access_token}`;
-
+        if(action.payload.errcode===0)
+        {
+          state.auth = action.payload;
+          state.websocket.url = `wss://${base_url}/${api_url}/subscribe?`;
+          let date = new Date();
+          state.token.startTime =  date.toISOString(true);
+  
+          state.handle.accept_url = `${url}/call/accept_inbound?access_token=${state.auth.access_token}`;
+          state.handle.reject_url = `${url}/call/reject_inbound?access_token=${state.auth.access_token}`;
+  
+        }else{
+          state.error = action.payload;
+        }
 
       });
       builder.addCase(refreshToken.pending, (state, action) => {
@@ -177,14 +185,20 @@ const apiCallSlice = createSlice({
       builder.addCase(refreshToken.fulfilled, (state, action) => {
         // Add user to the state array
         console.log(action.payload);
-        state.auth = action.payload;
-        state.websocket.url = `wss://${base_url}/${api_url}/subscribe?`;
-        state.token.send_refresh_token = true;
-        let date = new Date();
-        state.token.startTime =  date.toISOString(true);
+        if(action.payload.errcode===0)
+        {
+          state.auth = action.payload;
+          state.websocket.url = `wss://${base_url}/${api_url}/subscribe?`;
+          state.token.send_refresh_token = true;
+          let date = new Date();
+          state.token.startTime =  date.toISOString(true);
+  
+          state.handle.accept_url = `${url}/call/accept_inbound?access_token=${state.auth.access_token}`;
+          state.handle.reject_url = `${url}/call/reject_inbound?access_token=${state.auth.access_token}`;
+        }else{
+          state.error = action.payload;
+        }
 
-        state.handle.accept_url = `${url}/call/accept_inbound?access_token=${state.auth.access_token}`;
-        state.handle.reject_url = `${url}/call/reject_inbound?access_token=${state.auth.access_token}`;
       });
       builder.addCase(handleApiCall.fulfilled, (state, action) => {
         // Add user to the state array

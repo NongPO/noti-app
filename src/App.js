@@ -41,7 +41,7 @@ function App() {
       let endDate   = new Date();
       let startDate = new Date(tokenMgn.startTime)
       let seconds = (endDate.getTime() - startDate.getTime()) / 1000;
-      let remain = auth.refresh_token_expire_time - seconds
+      let remain = auth.access_token_expire_time - seconds
       if(remain <= 1000)
       {
         console.log('refreshToken for Auth.');

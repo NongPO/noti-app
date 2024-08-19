@@ -23,38 +23,81 @@ const AboutPage = () => {
   useEffect(() => {
 
     console.log(events);
-    if (events.events && events.events.msg.hasOwnProperty("members") && events.events.msg.members[0]) {
-      let caller={
-          name : events.events.sn,
-          ext : events.events.msg.members[0].extension.number,
-          isWaiting: false,
-          callId : events.events.msg.call_id,
+    if (events.events && events.events.type)
+    {
+        let caller={
+          name :'',
+          ext : '',
+          isWaiting: true,
+          callId :'',
           error : null
-      };
-      dispatch(updateIncoming(
+        };
+
+        switch(events.events.type)
         {
-          call_id:events.events.msg.call_id,
-          channel_id:events.events.msg.members[0].extension.channel_id
+          case 30011:
+
+            break;
+          case 30012:
+
+            break;
+          case 30016:
+            //   let caller={
+            //       name : events.events.sn,
+            //       ext : events.events.msg.members[0].extension.number,
+            //       isWaiting: false,
+            //       callId : events.events.msg.call_id,
+            //       error : null
+            //   };
+            //   dispatch(updateIncoming(
+            //     {
+            //       call_id:events.events.msg.call_id,
+            //       channel_id:events.events.msg.members[0].extension.channel_id
+            //     }
+            //   ))
+              
+            //   dispatch(updateCaller( caller));
+            break;
+          default:
+            dispatch(updateCaller( caller));
+            break;
         }
-      ))
-      
-      dispatch(updateCaller( caller));
     }
 
-    if (events.events && events.events.msg.hasOwnProperty("call_from") && events.events.msg.call_from) {
-      let call_from=events.events.msg.call_from;
-      let call_to=events.events.msg.call_to;
-      let call_duration=events.events.msg.call_duration;
-      let caller={
-        name : events.events.sn,
-        ext : `call from ${call_from} to ${call_to} duration ${call_duration} `,
-        isWaiting: true,
-        callId : events.events.msg.call_id,
-        error : null
-    };
+
+    // if (events.events && events.events.msg.hasOwnProperty("members") && events.events.msg.members[0]) {
+    //   let caller={
+    //       name : events.events.sn,
+    //       ext : events.events.msg.members[0].extension.number,
+    //       isWaiting: false,
+    //       callId : events.events.msg.call_id,
+    //       error : null
+    //   };
+    //   dispatch(updateIncoming(
+    //     {
+    //       call_id:events.events.msg.call_id,
+    //       channel_id:events.events.msg.members[0].extension.channel_id
+    //     }
+    //   ))
+      
+    //   dispatch(updateCaller( caller));
+    // }
+
+    // if (events.events && events.events.msg.hasOwnProperty("call_from") && events.events.msg.call_from) {
+    //   let call_from=events.events.msg.call_from;
+    //   let call_to=events.events.msg.call_to;
+    //   let call_duration=events.events.msg.call_duration;
+    //   let caller={
+    //     name : events.events.sn,
+    //     ext : `call from ${call_from} to ${call_to} duration ${call_duration} `,
+    //     isWaiting: true,
+    //     callId : events.events.msg.call_id,
+    //     error : null
+    // };
     
-    dispatch(updateCaller( caller));
-    }
+    //   dispatch(updateCaller( caller));
+    // }
+
     return () => {
 
     }
