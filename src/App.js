@@ -9,7 +9,7 @@ import Aboutus from '../src/pages/Aboutus'
 
 import { useSelector, useDispatch } from "react-redux";
 import {
- // getToken,
+  getToken,
   refreshToken,
   getTokenMgn,
   getAuth,
@@ -68,7 +68,7 @@ function App() {
     {
       dispatch( updateSendRefreshToken(true));
       console.log('refreshToken for Auth.');
-      dispatch( refreshToken());
+      dispatch( getToken());
     }
 
 
@@ -80,7 +80,7 @@ function App() {
         console.log('Connected to ', url);
         ws.onopen = () => {
           console.log('Connected to WebSocket');
-          ws.send(JSON.stringify({topic_list:[30016,30011]}));
+          ws.send(JSON.stringify({topic_list:[30016,30011, 30012]}));
 
 
         };
@@ -89,7 +89,7 @@ function App() {
           try
           {
             const obj = JSON.parse(event.data);
-            //console.log(obj);
+            console.log(obj);
             if (obj && obj.hasOwnProperty("msg") && obj.msg) {
               const msg =  JSON.parse(obj.msg);
               let evObj = {

@@ -26,77 +26,86 @@ const AboutPage = () => {
     if (events.events && events.events.type)
     {
         let caller={
-          name :'',
+          name :events.events.sn,
           ext : '',
           isWaiting: true,
-          callId :'',
+          callId : events.events.msg.call_id,
           error : null
         };
+        
+        console.log('events.events.type:',events.events.type);
 
         switch(events.events.type)
         {
           case 30011:
+            caller.isWaiting = false;
+            if ( events.events.msg.hasOwnProperty("members"))
+              {
+                events.events.msg.members.forEach((member) => {
+                  console.log(member);
 
-            break;
-          case 30012:
+                  if(member.hasOwnProperty("inbound"))
+                  {
+                    caller.ext = `call from ${member.inbound.from} to ${member.inbound.to} status ${member.inbound.member_status}`;
+                    dispatch( updateIncoming(
+                      {
+                        call_id:events.events.msg.call_id,
+                        channel_id:member.inbound.channel_id
+                      }
+                    ));
+                    return;
+                  }
+
+                  if(member.hasOwnProperty("extension"))
+                    {
+                      caller.ext = `call from ${member.extension.number}   status ${member.extension.member_status}`;
+                      dispatch(updateIncoming(
+                        {
+                          call_id:events.events.msg.call_id,
+                          channel_id:member.extension.channel_id
+                        }
+                      ));
+                      return;
+                    }
+
+                });
+              }
 
             break;
           case 30016:
-            //   let caller={
-            //       name : events.events.sn,
-            //       ext : events.events.msg.members[0].extension.number,
-            //       isWaiting: false,
-            //       callId : events.events.msg.call_id,
-            //       error : null
-            //   };
-            //   dispatch(updateIncoming(
-            //     {
-            //       call_id:events.events.msg.call_id,
-            //       channel_id:events.events.msg.members[0].extension.channel_id
-            //     }
-            //   ))
-              
-            //   dispatch(updateCaller( caller));
+            caller.isWaiting = false;
+            if ( events.events.msg.hasOwnProperty("members"))
+            {
+
+              events.events.msg.members.forEach((member) => {
+
+                console.log(member);
+
+                if(member.hasOwnProperty("inbound"))
+                {
+                  caller.ext = `call from ${member.inbound.from} to ${member.inbound.to} status ${member.inbound.member_status}`;
+                  dispatch(updateIncoming(
+                    {
+                      call_id:events.events.msg.call_id,
+                      channel_id:member.inbound.channel_id
+                    }
+                  ));
+                  return;
+                }
+              });
+            }
+            break;
+          case 30012:
+            caller.isWaiting = true;
             break;
           default:
-            dispatch(updateCaller( caller));
+
             break;
         }
+
+        dispatch(updateCaller(caller));
     }
 
-
-    // if (events.events && events.events.msg.hasOwnProperty("members") && events.events.msg.members[0]) {
-    //   let caller={
-    //       name : events.events.sn,
-    //       ext : events.events.msg.members[0].extension.number,
-    //       isWaiting: false,
-    //       callId : events.events.msg.call_id,
-    //       error : null
-    //   };
-    //   dispatch(updateIncoming(
-    //     {
-    //       call_id:events.events.msg.call_id,
-    //       channel_id:events.events.msg.members[0].extension.channel_id
-    //     }
-    //   ))
-      
-    //   dispatch(updateCaller( caller));
-    // }
-
-    // if (events.events && events.events.msg.hasOwnProperty("call_from") && events.events.msg.call_from) {
-    //   let call_from=events.events.msg.call_from;
-    //   let call_to=events.events.msg.call_to;
-    //   let call_duration=events.events.msg.call_duration;
-    //   let caller={
-    //     name : events.events.sn,
-    //     ext : `call from ${call_from} to ${call_to} duration ${call_duration} `,
-    //     isWaiting: true,
-    //     callId : events.events.msg.call_id,
-    //     error : null
-    // };
-    
-    //   dispatch(updateCaller( caller));
-    // }
 
     return () => {
 

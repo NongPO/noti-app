@@ -1,0 +1,69 @@
+[
+{
+    "type": 30011,
+    "sn": "3651E3333661",
+    "msg": {
+        "call_id": "1724075876.426",
+        "members": [
+            {
+                "inbound": {
+                    "from": "0940532500",
+                    "to": "",
+                    "trunk_name": "IN_TEST",
+                    "channel_id": "PJSIP/trunk-IN_TEST-endpoint-000000e8",
+                    "member_status": "ALERT",
+                    "call_path": ""
+                }
+            }
+        ]
+    }
+}
+,
+{
+    "type": 30016,
+    "sn": "3651E3333661",
+    "msg": {
+        "call_id": "1724075876.426",
+        "members": [
+            {
+                "inbound": {
+                    "from": "0940532500",
+                    "to": "",
+                    "trunk_name": "IN_TEST",
+                    "channel_id": "PJSIP/trunk-IN_TEST-endpoint-000000e8",
+                    "member_status": "ALERT",
+                    "call_path": ""
+                }
+            }
+        ]
+    }
+}
+,
+{
+    "type": 30011,
+    "sn": "3651E3333661",
+    "msg": {
+        "call_id": "1724075876.426",
+        "members": [
+            {
+                "extension": {
+                    "number": "1000",
+                    "channel_id": "PJSIP/1000-000000e9",
+                    "member_status": "RING",
+                    "call_path": ""
+                }
+            },
+            {
+                "inbound": {
+                    "from": "0940532500",
+                    "to": "1000",
+                    "trunk_name": "IN_TEST",
+                    "channel_id": "PJSIP/trunk-IN_TEST-endpoint-000000e8",
+                    "member_status": "ALERT",
+                    "call_path": ""
+                }
+            }
+        ]
+    }
+}
+]

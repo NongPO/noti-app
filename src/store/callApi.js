@@ -69,6 +69,7 @@ const tokenApiCall = (uri)=> {
       await fetch(refresh_url, {
         method: "POST", // *GET, POST, PUT, DELETE, etc.
         headers: {
+          'User-Agent': 'OpenAPI',
           'Content-Type': 'application/json',
         },
         body:JSON.stringify(authBody)
@@ -114,6 +115,7 @@ export const handleApiCall = createAsyncThunk(
            await fetch(action_url, {
               method: 'POST',
               headers: {
+                'User-Agent': 'OpenAPI',
                 'Content-Type': 'application/json',
               },
               body: {"channel_id" : channel_id}, // Send callId as part of the body
