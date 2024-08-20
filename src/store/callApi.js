@@ -179,7 +179,7 @@ const apiCallSlice = createSlice({
           state.token.startTime =  date.toISOString(true);
   
           state.handle.accept_url = `${url}/call/accept_inbound?access_token=${state.auth.access_token}`;
-          state.handle.reject_url = `${url}/call/reject_inbound?access_token=${state.auth.access_token}`;
+          state.handle.reject_url = `${url}/call/refuse_inbound?access_token=${state.auth.access_token}`;
   
         }else{
           state.error = action.payload;
