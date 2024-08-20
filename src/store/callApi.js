@@ -107,10 +107,15 @@ export const refreshToken = createAsyncThunk(
 
 export const handleApiCall = createAsyncThunk(
     "api/handleCall",
-    async (action_url, channel_id) => {
+    async (action) => {
         return new Promise(async (resolve, reject) => {
 
         try {
+          let action_url = action.action_url;
+          let channel_id = action.channel_id;
+
+          console.log('action_url:',action_url);
+          console.log('channel_id:',channel_id);
 
            await fetch(action_url, {
               method: 'POST',
@@ -118,7 +123,7 @@ export const handleApiCall = createAsyncThunk(
                 'User-Agent': 'OpenAPI',
                 'Content-Type': 'application/json',
               },
-              body: {"channel_id" : channel_id}, // Send callId as part of the body
+              body: JSON.stringify({channel_id : channel_id}), // Send callId as part of the body
             })
             .then((json) => json.json())
             .then(function (data) {

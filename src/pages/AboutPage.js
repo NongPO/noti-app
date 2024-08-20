@@ -38,38 +38,38 @@ const AboutPage = () => {
         switch(events.events.type)
         {
           case 30011:
-            caller.isWaiting = false;
-            if ( events.events.msg.hasOwnProperty("members"))
-              {
-                events.events.msg.members.forEach((member) => {
-                  console.log(member);
+            // caller.isWaiting = false;
+            // if ( events.events.msg.hasOwnProperty("members"))
+            //   {
+            //     events.events.msg.members.forEach((member) => {
+            //       console.log(member);
 
-                  if(member.hasOwnProperty("inbound"))
-                  {
-                    caller.ext = `call from ${member.inbound.from} to ${member.inbound.to} status ${member.inbound.member_status}`;
-                    dispatch( updateIncoming(
-                      {
-                        call_id:events.events.msg.call_id,
-                        channel_id:member.inbound.channel_id
-                      }
-                    ));
-                    return;
-                  }
+            //       if(member.hasOwnProperty("inbound"))
+            //       {
+            //         caller.ext = `call from ${member.inbound.from} to ${member.inbound.to} status ${member.inbound.member_status}`;
+            //         dispatch( updateIncoming(
+            //           {
+            //             call_id:events.events.msg.call_id,
+            //             channel_id:member.inbound.channel_id
+            //           }
+            //         ));
+            //         return;
+            //       }
 
-                  if(member.hasOwnProperty("extension"))
-                    {
-                      caller.ext = `call from ${member.extension.number}   status ${member.extension.member_status}`;
-                      dispatch(updateIncoming(
-                        {
-                          call_id:events.events.msg.call_id,
-                          channel_id:member.extension.channel_id
-                        }
-                      ));
-                      return;
-                    }
+            //       if(member.hasOwnProperty("extension"))
+            //         {
+            //           caller.ext = `call from ${member.extension.number}   status ${member.extension.member_status}`;
+            //           dispatch(updateIncoming(
+            //             {
+            //               call_id:events.events.msg.call_id,
+            //               channel_id:member.extension.channel_id
+            //             }
+            //           ));
+            //           return;
+            //         }
 
-                });
-              }
+            //     });
+            //   }
 
             break;
           case 30016:
@@ -114,12 +114,20 @@ const AboutPage = () => {
 
   const handleAnswerClick = async () => {
     console.log(incomingCall);
-     dispatch( handleApiCall(callHandle.accept_url, incomingCall.channel_id));
+    if (callHandle.accept_url && incomingCall.channel_id) {
+      dispatch(handleApiCall({ action_url: callHandle.accept_url, channel_id: incomingCall.channel_id }));
+    } else {
+      console.error('Error: action_url or channel_id is undefined');
+    }
   };
-
+  
   const handleRejectClick = async () => {
     console.log(incomingCall);
-     dispatch(handleApiCall(callHandle.reject_url, incomingCall.channel_id));
+    if (callHandle.reject_url && incomingCall.channel_id) {
+      dispatch(handleApiCall({ action_url: callHandle.reject_url, channel_id: incomingCall.channel_id }));
+    } else {
+      console.error('Error: action_url or channel_id is undefined');
+    }
   };
 
   return (
